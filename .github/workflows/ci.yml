@@ -8,4 +8,4 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - run: npm test
-      - run: node bin/envdoctor.js check --strict --no-git-check . || true
+      - run: cp .env.example .env && node bin/envdoctor.js check --strict .

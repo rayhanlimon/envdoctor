@@ -25,7 +25,7 @@ Requires Node 18+. No dependencies.
 ```sh
 npm install -g envdoctor
 # or run from source:
-git clone https://github.com/<you>/envdoctor && cd envdoctor
+git clone https://github.com/rayhanlimon/envdoctor && cd envdoctor
 node bin/envdoctor.js check /path/to/project
 ```
 

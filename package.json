@@ -18,6 +18,7 @@
     "secrets",
     "12-factor"
   ],
+  "repository": {"type": "git", "url": "https://github.com/rayhanlimon/envdoctor.git"},
   "license": "MIT",
   "engines": {
     "node": ">=18"
