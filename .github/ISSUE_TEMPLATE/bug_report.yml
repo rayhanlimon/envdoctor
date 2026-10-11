@@ -1,0 +1,12 @@
+---
+name: Bug report
+about: Report a wrong or missing finding
+title: "[bug] "
+labels: bug
+body:
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: .env snippet (redacted), command run, expected vs actual output
+---

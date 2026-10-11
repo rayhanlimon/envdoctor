@@ -1,0 +1,25 @@
+{
+  "name": "envdoctor",
+  "version": "0.1.0",
+  "description": "Zero-dependency dotenv + env-usage checker: validate .env against code and .env.example, catch unused/missing keys, secret leaks.",
+  "type": "module",
+  "bin": {
+    "envdoctor": "./bin/envdoctor.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "dotenv",
+    "env",
+    "lint",
+    "dx",
+    "dotenv-linter",
+    "secrets",
+    "12-factor"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
