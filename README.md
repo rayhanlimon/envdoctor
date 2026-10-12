@@ -47,6 +47,9 @@ envdoctor check --no-scan --no-git-check --no-secret-scan
 # exempt keys from unused warnings
 envdoctor check --allow-unused PORT,HOST
 
+# skip directories (e.g. test fixtures) in code scan
+envdoctor check --ignore test,fixtures
+
 # generate .env.example from .env (values redacted)
 envdoctor init
 ```

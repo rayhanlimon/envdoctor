@@ -16,6 +16,7 @@ export async function collectCodeRefs(projectDir, opts = {}) {
   const ignore = new Set([...DEFAULT_IGNORE, ...(opts.ignore ?? [])]);
   function addRef(name, file) {
     if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) return;
+    if (name.length < 2) return; // skip doc placeholders like process.env.X
     let e = refs.get(name);
     if (!e) { e = { files: new Set(), count: 0 }; refs.set(name, e); }
     e.files.add(file);

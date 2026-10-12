@@ -30,6 +30,7 @@ function printHelp() {
     '  --json              Output JSON report',
     '  --strict            Exit non-zero on warnings too',
     '  --allow-unused K    Comma-separated keys exempt from unused-key info',
+    '  --ignore D          Comma-separated dir names to skip in scan (repeatable)',
     '  --no-git-check      Skip gitignore/tracked-file safety checks',
     '  --no-secret-scan    Skip real-secret detection',
     '',
@@ -39,7 +40,7 @@ function printHelp() {
 
 function parseArgs(argv) {
   const args = { cmd: 'check', dir: process.cwd(), env: '.env', example: null, exampleAuto: true,
-    scan: true, json: false, strict: false, allowUnused: [], gitCheck: true, secretScan: true };
+    scan: true, json: false, strict: false, allowUnused: [], ignore: [], gitCheck: true, secretScan: true };
   const rest = [...argv];
   if (rest[0] === 'check' || rest[0] === 'init') args.cmd = rest.shift();
   while (rest.length) {
@@ -60,6 +61,11 @@ function parseArgs(argv) {
       args.allowUnused.push(...v.split(',').map(s => s.trim()).filter(Boolean));
     }
     else if (a.startsWith('--allow-unused=')) args.allowUnused.push(...a.slice(15).split(',').map(s => s.trim()).filter(Boolean));
+    else if (a === '--ignore') {
+      const v = rest.shift() ?? fail('--ignore needs a value');
+      args.ignore.push(...v.split(',').map(s => s.trim()).filter(Boolean));
+    }
+    else if (a.startsWith('--ignore=')) args.ignore.push(...a.slice(9).split(',').map(s => s.trim()).filter(Boolean));
     else if (a === '--force') args.force = true;
     else if (a.startsWith('-')) fail(`Unknown option: ${a}`);
     else args.dir = a;
@@ -110,7 +116,7 @@ async function cmdCheck(args) {
   }
   let codeRefs = null;
   if (args.scan) {
-    try { codeRefs = await collectCodeRefs(dir); }
+    try { codeRefs = await collectCodeRefs(dir, { ignore: args.ignore }); }
     catch (e) { fail('Code scan failed: ' + (e && e.message)); }
   }
   const result = checkEnvFiles({ envText, exampleText, codeRefs,
